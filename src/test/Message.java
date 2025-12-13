@@ -12,11 +12,14 @@ public class Message {
         this.data = asText.getBytes();
         this.asText = asText;
         this.date = new Date();
-        if((Double.parseDouble(asText)) != 0) {
-            this.asDouble = Double.parseDouble(asText);
-        }else{
-            this.asDouble = 0;
+        
+        double temp;
+        try {
+            temp = Double.parseDouble(asText);
+        } catch (NumberFormatException e) {
+            temp = Double.NaN;
         }
+        this.asDouble = temp;
     }
     public Message(double asDouble) {
         this.asDouble = asDouble;
