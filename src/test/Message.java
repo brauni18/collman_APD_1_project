@@ -13,13 +13,12 @@ public class Message {
         this.asText = asText;
         this.date = new Date();
         
-        double temp;
-        try {
-            temp = Double.parseDouble(asText);
-        } catch (NumberFormatException e) {
-            temp = Double.NaN;
+        if (asText == null){
+            this.asDouble = Double.NaN;
+        }else{
+            this.asDouble = Double.parseDouble(asText);
         }
-        this.asDouble = temp;
+
     }
     public Message(double asDouble) {
         this.asDouble = asDouble;

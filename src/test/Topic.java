@@ -8,7 +8,7 @@ public class Topic {
     public List<Agent> subs;
     public List<Agent> pubs;
 
-    Topic(String name){
+    public Topic(String name){
         this.name=name;
         this.subs = new ArrayList<>();
         this.pubs = new ArrayList<>();

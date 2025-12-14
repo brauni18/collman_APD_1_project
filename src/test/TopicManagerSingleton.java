@@ -15,7 +15,7 @@ public class TopicManagerSingleton {
         }
         
         public Topic getTopic(String name) {
-            return topics.computeIfAbsent(name, Topic::new);
+            return topics.computeIfAbsent(name, topicName -> new Topic(topicName));
         }
         public Collection<Topic> getTopics() {
             return topics.values();
