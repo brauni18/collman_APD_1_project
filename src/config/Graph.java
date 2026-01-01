@@ -19,38 +19,50 @@ public class Graph extends ArrayList<Node>{
         return false;
     }
     public void createFromTopics(){ 
+            this.clear();
             TopicManager tm = TopicManagerSingleton.get();
             HashMap<String, Node> nodeMap = new HashMap<>();
-            this.clear();
+            ArrayList<String> topicNames = tm.getAllTopicNames();
 
-           for (String topicName : tm.getAllTopicNames()) {
-        Topic topic = tm.getTopic(topicName);
-        Node topicNode = nodeMap.get("T" + topicName);
+            //  Creating nodes for each topic
+            for (String topicName : topicNames) {
+                Topic topic = tm.getTopic(topicName);
+                Node topicNode = new Node("T" + topic.getName());
+                nodeMap.put("T" + topic.getName(), topicNode);
+
+                
+                for (Agent publisher : topic.getPublishers()) {
+                    Node agentNode = new Node(publisher.getName());
+                    nodeMap.put(publisher.getName(), agentNode);
+
+                }
+                
+                
+                for (Agent subscriber : topic.getSubscribers()) {
+                    Node agentNode = new Node(subscriber.getName());
+                    nodeMap.put(subscriber.getName(), agentNode);
+                }
+            }
         
-        // Step 3: Handle publishers (Agent -> Topic)
-        for (Agent publisher : topic.getPublishers()) {
-            Node agentNode = getOrCreateAgentNode(publisher.getName(), nodeMap);
-            agentNode.addEdge(topicNode);
-        }
-        
-        // Step 4: Handle subscribers (Topic -> Agent)
-        for (Agent subscriber : topic.getSubscribers()) {
-            Node agentNode = getOrCreateAgentNode(subscriber.getName(), nodeMap);
-            topicNode.addEdge(agentNode);
-        }
+            // Adding all nodes to the graph
+            for (Node node : nodeMap.values()) {
+                this.add(node);
+            }
+
+           
     }
 }
 
-private Node getOrCreateAgentNode(String agentName, HashMap<String, Node> nodeMap) {
-    Node agentNode = nodeMap.get(agentName);
-    if (agentNode == null) {
-        agentNode = new Node(agentName);
-        this.add(agentNode);
-        nodeMap.put(agentName, agentNode);
-    }
-    return agentNode;
-}
-    }    
+// private Node getOrCreateAgentNode(String agentName, HashMap<String, Node> nodeMap) {
+//     Node agentNode = nodeMap.get(agentName);
+//     if (agentNode == null) {
+//         agentNode = new Node(agentName);
+//         this.add(agentNode);
+//         nodeMap.put(agentName, agentNode);
+//     }
+//     return agentNode;
+// }
+       
 
     
 

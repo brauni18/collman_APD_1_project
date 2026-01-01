@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class TopicManagerSingleton {
 
@@ -22,7 +22,7 @@ public class TopicManagerSingleton {
         public Collection<Topic> getTopics() {
             return topics.values();
         }
-        public List<String> getAllTopicNames() {
+        public ArrayList<String> getAllTopicNames() {
             return new ArrayList<>(topics.keySet());
         }
 
