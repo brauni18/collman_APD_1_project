@@ -30,6 +30,8 @@ public class BinOpAgent implements Agent {
         // Subscribe to input topics
         inputTopic1.subscribe(this);
         inputTopic2.subscribe(this);
+
+        outputTopic.addPublisher(this);
     }
 
     @Override
@@ -39,14 +41,14 @@ public class BinOpAgent implements Agent {
 
     @Override
     public void callback(String topic, Message msg) {
-        // Store messages from each input topic
+        
         if (topic.equals(inputTopic1.getName())) {
             msg1 = msg;
         } else if (topic.equals(inputTopic2.getName())) {
             msg2 = msg;
         }
         
-        // If we have both messages, perform the operation
+        
         if (msg1 != null && msg2 != null) {
             double result = operation.apply(msg1.asDouble, msg2.asDouble);
             outputTopic.publish(new Message(result));

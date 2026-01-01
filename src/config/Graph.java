@@ -18,51 +18,52 @@ public class Graph extends ArrayList<Node>{
         }
         return false;
     }
-    public void createFromTopics(){ 
-            this.clear();
-            TopicManager tm = TopicManagerSingleton.get();
-            HashMap<String, Node> nodeMap = new HashMap<>();
-            ArrayList<String> topicNames = tm.getAllTopicNames();
-
-            //  Creating nodes for each topic
-            for (String topicName : topicNames) {
-                Topic topic = tm.getTopic(topicName);
-                Node topicNode = new Node("T" + topic.getName());
-                nodeMap.put("T" + topic.getName(), topicNode);
-
-                
-                for (Agent publisher : topic.getPublishers()) {
-                    Node agentNode = new Node(publisher.getName());
-                    nodeMap.put(publisher.getName(), agentNode);
-
-                }
-                
-                
-                for (Agent subscriber : topic.getSubscribers()) {
-                    Node agentNode = new Node(subscriber.getName());
-                    nodeMap.put(subscriber.getName(), agentNode);
-                }
-            }
+    public void createFromTopics() {
+        this.clear();
+        TopicManager tm = TopicManagerSingleton.get();
+        HashMap<String, Node> nodeMap = new HashMap<>();
+        ArrayList<String> topicNames = tm.getAllTopicNames();
         
-            // Adding all nodes to the graph
-            for (Node node : nodeMap.values()) {
-                this.add(node);
+        for (String topicName : topicNames) {
+            Topic topic = tm.getTopic(topicName);
+            
+            // Create topic node
+            Node topicNode = new Node("T" + topic.getName());
+            nodeMap.put("T" + topic.getName(), topicNode);
+            this.add(topicNode);
+
+            // Handle publishers
+            for (Agent publisher : topic.getPublishers()) {
+                Node publisherNode = nodeMap.get(publisher.getName());
+                if (publisherNode == null) {
+                    publisherNode = new Node(publisher.getName());
+                    nodeMap.put(publisher.getName(), publisherNode);
+                    this.add(publisherNode);
+               }
+                publisherNode.addEdge(topicNode);
+               
             }
 
-           
+            // Handle subscribers  
+            for (Agent subscriber : topic.getSubscribers()) {
+                
+                Node subscriberNode = nodeMap.get(subscriber.getName());
+                if (subscriberNode == null) {
+                    subscriberNode = new Node(subscriber.getName());
+                    nodeMap.put(subscriber.getName(), subscriberNode);
+                    this.add(subscriberNode);
+                   
+                }
+                topicNode.addEdge(subscriberNode);
+                
+            }
+        }
+        
+        
     }
 }
 
-// private Node getOrCreateAgentNode(String agentName, HashMap<String, Node> nodeMap) {
-//     Node agentNode = nodeMap.get(agentName);
-//     if (agentNode == null) {
-//         agentNode = new Node(agentName);
-//         this.add(agentNode);
-//         nodeMap.put(agentName, agentNode);
-//     }
-//     return agentNode;
-// }
-       
 
-    
+
+
 

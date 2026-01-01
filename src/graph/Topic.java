@@ -28,19 +28,19 @@ public class Topic {
     }
 
     public void addPublisher(Agent a){
-        this.pubs.add(a);
+        pubs.add(a);
     }
 
     public void removePublisher(Agent a){
-        this.pubs.remove(a);
+        pubs.remove(a);
     }
     public List<Agent> getSubscribers(){
-        return this.subs;
+        return subs;
     }
     public List<Agent> getPublishers(){
-        return this.pubs;
+        return pubs;
     }
     public String getName(){
-        return this.name;
+        return name;
     }
 }
