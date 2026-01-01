@@ -1,4 +1,4 @@
-package config;
+package test;
 
 public interface Config {
     void create();

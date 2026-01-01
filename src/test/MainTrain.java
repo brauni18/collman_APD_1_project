@@ -1,15 +1,11 @@
-package graph;
+package test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import config.Config;
-import config.MathExampleConfig;
-import config.Node;
-import config.Graph;
 
-import graph.TopicManagerSingleton.TopicManager;
+import test.TopicManagerSingleton.TopicManager;
 
 public class MainTrain {
 

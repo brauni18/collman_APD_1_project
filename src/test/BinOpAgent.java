@@ -1,10 +1,6 @@
-package config;
+package test;
 
 import java.util.function.BinaryOperator;
-
-import graph.Agent;
-import graph.Message;
-import graph.Topic;
 
 
 

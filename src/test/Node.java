@@ -1,8 +1,7 @@
-package config;
+package test;
 
 import java.util.ArrayList;
 import java.util.List;
-import graph.Message;
 
 public class Node {
     private String name;

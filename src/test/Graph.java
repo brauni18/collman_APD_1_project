@@ -1,12 +1,9 @@
-package config;
+package test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import graph.Agent;
-import graph.Topic;
-import graph.TopicManagerSingleton;
-import graph.TopicManagerSingleton.TopicManager;
+import test.TopicManagerSingleton.TopicManager;
 
 public class Graph extends ArrayList<Node>{
     

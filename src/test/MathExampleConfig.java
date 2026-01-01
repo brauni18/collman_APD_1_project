@@ -1,7 +1,5 @@
-package config;
-import graph.Topic;
-import graph.TopicManagerSingleton;
-import graph.TopicManagerSingleton.TopicManager;
+package test;
+import test.TopicManagerSingleton.TopicManager;
 
 public class MathExampleConfig implements Config {
 
