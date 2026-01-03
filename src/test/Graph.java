@@ -22,19 +22,18 @@ public class Graph extends ArrayList<Node>{
         ArrayList<String> topicNames = tm.getAllTopicNames();
         
         for (String topicName : topicNames) {
+
             Topic topic = tm.getTopic(topicName);
-            
-            // Create topic node
-            Node topicNode = new Node("T" + topic.getName());
-            nodeMap.put("T" + topic.getName(), topicNode);
+            Node topicNode = new Node("T" + topicName);
+            nodeMap.put("T" + topicName, topicNode);
             this.add(topicNode);
 
             // Handle publishers
             for (Agent publisher : topic.getPublishers()) {
-                Node publisherNode = nodeMap.get(publisher.getName());
+                Node publisherNode = nodeMap.get("A" + publisher.getName());
                 if (publisherNode == null) {
-                    publisherNode = new Node(publisher.getName());
-                    nodeMap.put(publisher.getName(), publisherNode);
+                    publisherNode = new Node("A" + publisher.getName());
+                    nodeMap.put("A" + publisher.getName(), publisherNode);
                     this.add(publisherNode);
                }
                 publisherNode.addEdge(topicNode);
@@ -43,11 +42,11 @@ public class Graph extends ArrayList<Node>{
 
             // Handle subscribers  
             for (Agent subscriber : topic.getSubscribers()) {
-                
-                Node subscriberNode = nodeMap.get(subscriber.getName());
+
+                Node subscriberNode = nodeMap.get("A" + subscriber.getName());
                 if (subscriberNode == null) {
-                    subscriberNode = new Node(subscriber.getName());
-                    nodeMap.put(subscriber.getName(), subscriberNode);
+                    subscriberNode = new Node("A" + subscriber.getName());
+                    nodeMap.put("A" + subscriber.getName(), subscriberNode);
                     this.add(subscriberNode);
                    
                 }

@@ -6,7 +6,7 @@ import java.util.function.BinaryOperator;
 
 
 public class BinOpAgent implements Agent {
-    private Node agentName;
+    private String agentName;
     private Topic inputTopic1;
     private Topic inputTopic2;
     private Topic outputTopic;
@@ -15,13 +15,16 @@ public class BinOpAgent implements Agent {
     private Message msg1 = null;
     private Message msg2 = null;
 
-    public BinOpAgent(Node agentName, Topic inputTopic1, Topic inputTopic2, 
-                     Topic outputTopic, BinaryOperator<Double> operation) {
+    public BinOpAgent( String agentName, String inputTopic1Name, String inputTopic2Name, 
+                     String outputTopicName, BinaryOperator<Double> operation) {
         this.agentName = agentName;
-        this.inputTopic1 = inputTopic1;
-        this.inputTopic2 = inputTopic2;
-        this.outputTopic = outputTopic;
         this.operation = operation;
+
+        TopicManagerSingleton.TopicManager tm = TopicManagerSingleton.get();
+        inputTopic1 = tm.getTopic(inputTopic1Name);
+        inputTopic2 = tm.getTopic(inputTopic2Name);
+        outputTopic = tm.getTopic(outputTopicName);
+
         
         // Subscribe to input topics
         inputTopic1.subscribe(this);
@@ -32,7 +35,7 @@ public class BinOpAgent implements Agent {
 
     @Override
     public String getName() {
-        return agentName.getName();
+        return agentName;
     }
 
     @Override
@@ -48,6 +51,7 @@ public class BinOpAgent implements Agent {
         if (msg1 != null && msg2 != null) {
             double result = operation.apply(msg1.asDouble, msg2.asDouble);
             outputTopic.publish(new Message(result));
+            reset();
         }
     }
 
@@ -59,14 +63,9 @@ public class BinOpAgent implements Agent {
 
     @Override
     public void close() {
-        // Cleanup if needed
+        
     }
     
-    // Getter methods
-    public String getAgentName() {
-        return agentName.getName();
-    }
-
     public Topic getInputTopic1() {
         return inputTopic1;
     }
