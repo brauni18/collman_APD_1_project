@@ -1,22 +1,22 @@
 package test;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import test.TopicManagerSingleton.TopicManager;
 
 public class IncAgent implements Agent {
     private String agentName = "IncAgent";
-    private ArrayList<String> sub;
-    private ArrayList<String> pub;
+    private String[] sub;
+    private String[] pub;
     private TopicManager tm;
     private double value = 0;
 
-    public IncAgent(ArrayList<String> sub, ArrayList<String> pub) {
+    public IncAgent(String[] sub, String[] pub) {
         this.sub = sub;
         this.pub = pub;
         this.tm = TopicManagerSingleton.get();
-        tm.getTopic(sub.get(0)).subscribe(this);
-        tm.getTopic(pub.get(0)).addPublisher(this);
+        tm.getTopic(sub[0]).subscribe(this);
+        tm.getTopic(pub[0]).addPublisher(this);
     }
 
     @Override
@@ -26,9 +26,9 @@ public class IncAgent implements Agent {
 
     @Override
     public void callback(String topic, Message msg) {
-        if (topic.equals(sub.get(0))) {
+        if (topic.equals(sub[0])) {
             value = msg.asDouble + 1;
-            tm.getTopic(pub.get(0)).publish(new Message(value));
+            tm.getTopic(pub[0]).publish(new Message(value));
         }
     }
 
@@ -39,8 +39,8 @@ public class IncAgent implements Agent {
 
     @Override
     public void close() {
-        tm.getTopic(sub.get(0)).unsubscribe(this);
-        tm.getTopic(pub.get(0)).removePublisher(this);
+        tm.getTopic(sub[0]).unsubscribe(this);
+        tm.getTopic(pub[0]).removePublisher(this);
     }
      
 }
